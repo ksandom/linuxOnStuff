@@ -1,0 +1,161 @@
+#!/system/bin/sh
+# load the chroot environment
+
+rootPartition="/dev/block/mmcblk0p2"
+
+crHome="/sdcard/mnt/cr"
+crHomeWithoutMountPoint=$(echo $crhome | cut -d/ -f3-) # TODO think of a better way
+
+extraMountDirs="sys proc sdcard data"
+extraMounts="$extraMountDirs dev dev/pts"
+extraUnmounts="$extraMountDirs dev/pts dev"
+
+
+function essentials
+{
+  echo -n "$crHome  "
+  if ! isMounted "$crhome";  then
+    echo "mount."
+    mount "$rootPartition" "$crHome"
+  else
+    echo "skipped."
+  fi
+}
+
+function unessentials
+{
+  echo -n "$crHome  "
+  if isMounted "$crhome";  then
+    echo "unmount."
+    umount $crHome 
+  else
+    echo "skipped."
+  fi
+}
+
+function isMounted
+{
+  dst="$1"  
+  isThereStuff=$(ls $dst | wc -l 2>/dev/null)
+  
+  if [ "$isThereStuff" -gt 0 ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+function isMounted2
+{
+  dst="`echo $1 | cut -d/ -f 3-`" 
+  isThereStuff=$(mount | grep "$dst ")
+  
+  if [ "$isThereStuff" == "" ]; then
+    return 1
+  else
+    return 0
+  fi
+}
+
+
+function tryMount
+{
+  bindThing="$1"
+  dst="$crHome/$bindThing"
+  echo -n "  /$bindThing => $dst"
+    
+  if isMounted $dst; then
+    echo " - skipping"
+  else
+    echo " - binding"
+    mount -o bind /$bindThing $dst
+  fi
+}
+
+function tryUnmount
+{
+  bindThing="$1"
+  dst="$crHome/$bindThing"
+  echo -n "  $dst"
+    
+  if isMounted $dst; then
+    echo " - unbinding"
+    umount "$dst"
+  else
+    echo " - skipping"
+  fi
+}
+
+
+function mountExtras
+{
+  for fs in $extraMounts; do
+    tryMount "$fs"
+  done
+}
+
+function unmountExtras
+{
+  for fs in $extraUnmounts; do
+    tryUnmount "$fs"
+  done
+}
+
+function mountAll
+{
+  essentials
+  mountExtras
+}
+
+function unmountAll
+{
+  unmountExtras
+  unessentials
+}
+
+function startCR
+{
+  export PATH=/bin:/sbin:/usr/bin:/usr/sbin:$PATH
+  chroot "$crHome" bash -
+}
+
+function status
+{
+  echo -n "$crHome  "
+  if isMounted2 "$crHome "; then
+    echo "mounted"
+  else
+    echo "not mounted"
+  fi
+  
+  for fs in $extraMounts; do
+    echo -n "	$fs  "
+    if isMounted2 "$crHome/$fs"; then
+      echo "mounted"
+    else
+      echo "not mounted"
+    fi
+  done
+}
+
+function showHelp {
+  echo NI
+}
+
+
+
+case $1 in
+  "start")
+    mountAll
+    startCR
+  ;;
+  "stop")
+    unmountAll
+  ;;
+  "status")
+    status
+  ;;
+  *)
+    showHelp
+  ;;
+esac

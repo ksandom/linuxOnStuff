@@ -10,6 +10,8 @@ extraMountDirs="sys proc sdcard data"
 extraMounts="$extraMountDirs dev dev/pts"
 extraUnmounts="$extraMountDirs dev/pts dev"
 
+vncNumber=1
+
 
 function essentials
 {
@@ -107,11 +109,74 @@ function mountAll
   mountExtras
 }
 
+
 function unmountAll
 {
   unmountExtras
   unessentials
 }
+
+
+function getVNCLockFile
+{
+  echo $crHome/tmp/.X$vncNumber-lock
+}
+
+function getVNCPid
+{
+  vncLockFile=`getVNCLockFile`
+  sed 's/ *//g' "$vncLockFile"
+}
+
+
+function VNCLockExists
+{
+  [ -e `getVNCLockFile` ]
+  return $?
+}
+
+function VNCProcessExists
+{
+  pid=`getVNCPid`
+  
+  kill -0 $pid > /dev/null
+  return $?
+}
+
+function isVNCRunning
+{
+  if VNCLockExists; then
+    if VNCProcessExists; then
+      return 0
+    else
+      return 1
+    fi
+  else
+    return 1
+  fi
+}
+
+function showVNCStatus
+{
+  echo "VNC"
+  vncLockFile=`getVNCLockFile`
+  
+  echo -n "	VNC lock on :$vncNumber ($vncLockFile)  "
+  if VNCLockExists; then
+    echo "Yes."
+    echo -n "	Running  "
+    if VNCProcessExists; then
+      pid=$(getVNCPid)
+      echo "Yes ($pid)."
+    else
+      echo "No."
+    fi
+  else
+    echo "No."
+  fi
+}
+
+
 
 function startCR
 {
@@ -119,7 +184,15 @@ function startCR
   chroot "$crHome" bash -
 }
 
+
 function status
+{
+  mountStatus
+  showVNCStatus
+}
+
+
+function mountStatus
 {
   echo -n "$crHome  "
   if isMounted2 "$crHome "; then

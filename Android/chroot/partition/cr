@@ -16,7 +16,7 @@ vncNumber=1
 function essentials
 {
   echo -n "$crHome  "
-  if ! isMounted "$crhome";  then
+  if ! isMounted "$crHome";  then
     echo "mount."
     mount "$rootPartition" "$crHome"
   else
@@ -125,7 +125,9 @@ function getVNCLockFile
 function getVNCPid
 {
   vncLockFile=`getVNCLockFile`
-  sed 's/ *//g' "$vncLockFile"
+  if [ -e `getVNCLockFile` ];then
+    sed 's/ *//g' "$vncLockFile"
+  fi
 }
 
 
@@ -139,7 +141,7 @@ function VNCProcessExists
 {
   pid=`getVNCPid`
   
-  kill -0 $pid > /dev/null
+  kill -0 $pid 2>/dev/null
   return $?
 }
 
@@ -156,9 +158,41 @@ function isVNCRunning
   fi
 }
 
+function VNCStart
+{
+  echo -n "VNC start  "
+  if VNCProcessExists; then
+    echo "skipped."
+  else
+    if VNCLockExists; then
+      echo "... lock still exists. Removing."
+      VNCStop
+    fi
+    
+    echo "VNC start  starting."
+    export PATH=/bin:/sbin:/usr/bin:/usr/sbin:$PATH    
+    chroot "$crHome" vncserver -geometry 1920x1080 :1
+  fi
+}
+
+
+function VNCStop
+{
+  echo -n "VNC stop  "
+  if VNCLockExists; then
+    echo "stopping."
+    export PATH=/bin:/sbin:/usr/bin:/usr/sbin:$PATH    
+    export HOME=/
+    chroot "$crHome" vncserver -kill :1
+  else
+    echo "skipped."
+  fi
+}
+
+
 function showVNCStatus
 {
-  echo "VNC"
+  echo "VNC/desktop"
   vncLockFile=`getVNCLockFile`
   
   echo -n "	VNC lock on :$vncNumber ($vncLockFile)  "
@@ -212,23 +246,29 @@ function mountStatus
 }
 
 function showHelp {
-  echo NI
+  grep "^  *\".*#" $1 | sed 's/") #/	/g;s/^ *"//g'
 }
 
 
 
 case $1 in
-  "start")
+  "start") # Start chroot and all necessary dependancies.
     mountAll
     startCR
   ;;
-  "stop")
+  "stop") # Stop chroot and all necessary dependencies.
     unmountAll
   ;;
-  "status")
+  "startVNC") # Start VNC and all necessary dependancies.
+    VNCStart
+  ;;
+  "stopVNC") # Stop VNC.
+    VNCStop
+  ;;
+  "status") # Show the status of everything we know about.
     status
   ;;
   *)
-    showHelp
+    showHelp "$0"
   ;;
 esac

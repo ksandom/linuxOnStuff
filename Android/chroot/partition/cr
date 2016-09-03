@@ -11,6 +11,7 @@ extraMounts="$extraMountDirs dev dev/pts"
 extraUnmounts="$extraMountDirs dev/pts dev"
 
 vncNumber=1
+vncResolution="3200x1800"
 
 
 function essentials
@@ -176,7 +177,7 @@ function VNCStart
     
     echo "VNC start  starting."
     export PATH=/bin:/sbin:/usr/bin:/usr/sbin:$PATH    
-    chroot "$crHome" vncserver -geometry 1920x1080 :1
+    chroot "$crHome" vncserver -geometry "$vncResolution" :1
   fi
 }
 

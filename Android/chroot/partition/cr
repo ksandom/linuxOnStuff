@@ -122,6 +122,11 @@ function getVNCLockFile
   echo $crHome/tmp/.X$vncNumber-lock
 }
 
+function getVNCPidFile
+{
+  echo $crHome/.vnc/localhost:$vncNumber.pid
+}
+
 function getVNCPid
 {
   vncLockFile=`getVNCLockFile`
@@ -133,7 +138,7 @@ function getVNCPid
 
 function VNCLockExists
 {
-  [ -e `getVNCLockFile` ]
+  [ -e `getVNCLockFile` ] || [ -e `getVNCPidFile`  ]
   return $?
 }
 
@@ -175,6 +180,10 @@ function VNCStart
   fi
 }
 
+function VNCRemoveLock
+{
+  rm -Rf $crHome/tmp/.X$vncNumber-lock $crHome/tmp/.X11-unix/X$vncNumber $crHome/.vnc/localhost:$vncNumber.pid
+}
 
 function VNCStop
 {
@@ -184,6 +193,15 @@ function VNCStop
     export PATH=/bin:/sbin:/usr/bin:/usr/sbin:$PATH    
     export HOME=/
     chroot "$crHome" vncserver -kill :1
+    
+    if VNCProcessExists; then
+      echo "Whoops, VNC wasn't able to stop. A little self control may be required ;-)"
+    else
+      if VNCLockExists; then
+	echo "The lock still exists, but the process doesn't. Removing."
+        VNCRemoveLock
+      fi
+    fi
   else
     echo "skipped."
   fi
@@ -260,6 +278,7 @@ case $1 in
     unmountAll
   ;;
   "startVNC") # Start VNC and all necessary dependancies.
+    mountAll
     VNCStart
   ;;
   "stopVNC") # Stop VNC.

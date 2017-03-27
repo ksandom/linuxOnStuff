@@ -1,0 +1,21 @@
+#!/system/bin/bash
+# This is an example config.
+# Edit it and place it as /sdcard/.cr/config where config is the name of this file.
+
+# You need to specify either a rootPartition or rootImage.
+#   rootPartition is a normal partition containing your chroot environment.
+#   rootImage is an image of a partition. Ie there is no partition table.
+# NOTE that this script does not yet support disk images that contain a partition table.
+# rootPartition="/dev/block/sdg2"
+rootPartition=""
+rootImage="/sdcard/images/droid4.img"
+
+crHome="/sdcard/mnt/cr"
+crHomeWithoutMountPoint=$(echo $crhome | cut -d/ -f3-) # TODO think of a better way
+
+extraMountDirs="sys proc sdcard data"
+extraMounts="$extraMountDirs dev dev/pts"
+extraUnmounts="$extraMountDirs dev/pts dev"
+
+vncNumber=1
+vncResolution="3200x1800"

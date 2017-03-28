@@ -11,6 +11,16 @@ else
 fi
 
 
+
+
+
+
+
+
+
+#
+# Stuff for settup up the chroot.
+#
 function essentials
 {
   echo -n "$crHome  "
@@ -123,6 +133,10 @@ function unmountAll
 }
 
 
+
+#
+# Stuff for managing VNC.
+#
 function getVNCLockFile
 {
   echo $crHome/tmp/.X$vncNumber-lock

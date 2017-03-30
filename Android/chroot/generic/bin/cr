@@ -1,13 +1,15 @@
 #!/system/bin/bash
 # load the chroot environment
 
+crManagerHome="/sdcard/.cr"
+
 # bring in the libraries
-. /sdcard/.cr/lib/mounts.sh
-. /sdcard/.cr/lib/vnc.sh
-. /sdcard/.cr/lib/hacks.sh
+. $crManagerHome/lib/mounts.sh
+. $crManagerHome/lib/vnc.sh
+. $crManagerHome/lib/hacks.sh
 
 # bring in config.
-configLocation="/sdcard/.cr/config.d/config"
+configLocation="$crManagerHome/config.d/config"
 if [ -e "$configLocation" ]; then
   . /"$configLocation"
 else
@@ -18,5 +20,5 @@ fi
 
 # Start stuff up.
 applyAllHacks
-. /sdcard/.cr/lib/core.sh
-# 
+. $crManagerHome/lib/core.sh
+ 

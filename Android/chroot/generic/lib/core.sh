@@ -41,6 +41,6 @@ case $1 in
     status
   ;;
   *)
-    showHelp "$0"
+    showHelp "$crManagerHome/lib/core.sh"
   ;;
 esac

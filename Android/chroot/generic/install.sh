@@ -38,11 +38,11 @@ else
 fi
 
 # Prepare.
-mkdir -p $configDir/{bin,config.d,lib,mnt,state}
+mkdir -vp $configDir/{bin,config.d,lib,mnt,state}
 
 # Copy stuff
 for dirName in bin config.d lib; do
-  cp $dirName/* "$configDir/$dirName"
+  cp -v $dirName/* "$configDir/$dirName"
 done
 
 # Build bin.

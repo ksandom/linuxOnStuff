@@ -3,6 +3,31 @@
 #
 # Stuff for settup up the chroot.
 #
+function isMounted
+{
+  dst="$1"  
+  isThereStuff=$(ls $dst | wc -l 2>/dev/null)
+  
+  if [ "$isThereStuff" -gt 0 ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+function isMounted2
+{
+  dst="`echo $1 | cut -d/ -f 3-`" 
+  isThereStuff=$(mount | grep "$dst ")
+  
+  if [ "$isThereStuff" == "" ]; then
+    return 1
+  else
+    return 0
+  fi
+}
+
+
 function essentials
 {
   echo -n "$crHome  "
@@ -33,29 +58,6 @@ function unessentials
   fi
 }
 
-function isMounted
-{
-  dst="$1"  
-  isThereStuff=$(ls $dst | wc -l 2>/dev/null)
-  
-  if [ "$isThereStuff" -gt 0 ]; then
-    return 0
-  else
-    return 1
-  fi
-}
-
-function isMounted2
-{
-  dst="`echo $1 | cut -d/ -f 3-`" 
-  isThereStuff=$(mount | grep "$dst ")
-  
-  if [ "$isThereStuff" == "" ]; then
-    return 1
-  else
-    return 0
-  fi
-}
 
 
 function tryMount

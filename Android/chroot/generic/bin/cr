@@ -1,12 +1,13 @@
-#!/system/bin/sh
+#!/system/bin/bash
 # load the chroot environment
 
 # bring in the libraries
-. /sdcard/.cr/libs/mounts.sh
-. /sdcard/.cr/libs/vncc.sh
+. /sdcard/.cr/lib/mounts.sh
+. /sdcard/.cr/lib/vnc.sh
+. /sdcard/.cr/lib/hacks.sh
 
 # bring in config.
-configLocation="/sdcard/.cr/config"
+configLocation="/sdcard/.cr/config.d/config"
 if [ -e "$configLocation" ]; then
   . /"$configLocation"
 else
@@ -14,5 +15,8 @@ else
   exit 0
 fi
 
+
 # Start stuff up.
-. /sdcard/.cr/libs/core.sh
+applyAllHacks
+. /sdcard/.cr/lib/core.sh
+# 

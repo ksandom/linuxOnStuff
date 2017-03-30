@@ -1,0 +1,18 @@
+#!/bin/sh
+# load the chroot environment
+
+# bring in the libraries
+. /sdcard/.cr/libs/mounts.sh
+. /sdcard/.cr/libs/vncc.sh
+
+# bring in config.
+configLocation="/sdcard/.cr/config"
+if [ -e "$configLocation" ]; then
+  . /"$configLocation"
+else
+  echo "Could not find \"$configLocation\". Please see configExample for how to set this up."
+  exit 0
+fi
+
+# Start stuff up.
+. /sdcard/.cr/libs/core.sh

@@ -18,4 +18,17 @@ If directoryToMonitor is absent, it will be assumed to be `/dev/block` .
 
 # Example
 
-    nf
+    nf.linux
+    
+    Thu Mar 30 06:34:04 UTC 2017
+    93a94,96
+    > sdh
+    > sdh1
+    > sdh2
+
+# nf.linux vs nf.android?
+
+* `nf.android` - Use when running locally on the Android command line.
+* `nf.linux`
+  * Use when running natively on linux.
+  * Use when running a linux chroot on Android.

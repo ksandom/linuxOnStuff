@@ -1,0 +1,9 @@
+#!/system/bin/bash
+# Discover new files/devices on the fly for a given directory.
+# Syntax
+# $0 [directoryToMonitor[ tempDirectory]]
+
+
+# Interpret parameters if there are any.
+directoryToMonitor=${1:-/dev/block}
+tempDirectory=${2:-/sdcard/tmp/nf}

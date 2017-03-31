@@ -7,17 +7,9 @@ crManagerHome="/sdcard/.cr"
 . $crManagerHome/lib/mounts.sh
 . $crManagerHome/lib/vnc.sh
 . $crManagerHome/lib/hacks.sh
-
-# bring in config.
-configLocation="$crManagerHome/config.d/config"
-if [ -e "$configLocation" ]; then
-  . /"$configLocation"
-else
-  echo "Could not find \"$configLocation\". Please see configExample for how to set this up."
-  exit 0
-fi
-
+. $crManagerHome/lib/config.sh
+. $crManagerHome/lib/core.sh
 
 # Start stuff up.
 applyAllHacks
-. $crManagerHome/lib/core.sh
+chooseImage "$1" "$2" "$3"

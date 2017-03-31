@@ -1,6 +1,8 @@
 #!/system/bin/bash
 # This is an example config.
-# Edit it and place it as /sdcard/.cr/config where config is the name of this file.
+# Edit it and place it as /sdcard/.cr/config.d/crName where crName is the name you give to this file to describe it.
+
+crDescription="An example config."
 
 # You need to specify either a rootPartition or rootImage.
 #   rootPartition is a normal partition containing your chroot environment.

@@ -12,12 +12,5 @@ crDescription="An example config."
 rootPartition=""
 rootImage="/sdcard/images/droid4.img"
 
-crHome="/sdcard/mnt/cr"
-crHomeWithoutMountPoint=$(echo $crhome | cut -d/ -f3-) # TODO think of a better way
-
-extraMountDirs="sys proc sdcard data"
-extraMounts="$extraMountDirs dev dev/pts"
-extraUnmounts="$extraMountDirs dev/pts dev"
-
 vncNumber=1
 vncResolution="3200x1800"

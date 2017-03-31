@@ -38,10 +38,10 @@ else
 fi
 
 # Prepare.
-mkdir -vp $configDir/{bin,config.d,lib,mnt,state}
+mkdir -vp $configDir/{bin,config,config.d,lib,mnt,state}
 
 # Copy stuff
-for dirName in bin config.d lib; do
+for dirName in bin config config.d lib; do
   cp -v $dirName/* "$configDir/$dirName"
 done
 

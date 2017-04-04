@@ -49,4 +49,11 @@ done
 chmod 755 "$configDir/bin"/*
 
 # Build bin.
-# TODO Do this.
+if [ "$configDir" != "/sdcard/.cr" ]; then
+  cd "$configDir"
+  for filename in *;do
+    echo "Adapting $filename for install location of \"$configDir\""
+    sed -i "s#/sdcard/.cr#$configDir#g" $filename
+  done
+  cd ~-
+fi

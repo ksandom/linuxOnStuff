@@ -2,7 +2,7 @@
 
 function listConfigs
 {
-  ls -1 "$crManagerHome"/config.d
+  ls "$crManagerHome"/config.d
 }
 
 function listConfigsWithDescriptions
@@ -18,7 +18,7 @@ function listConfigsWithDescriptions
     
     # Display results.
     echo "$configName:$crDescription"
-  done < <(listConfigs) | column -t -s:
+  done < <(listConfigs) | formatOutput
 }
 
 function setConfigContext

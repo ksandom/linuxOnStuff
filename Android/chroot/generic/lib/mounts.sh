@@ -32,6 +32,7 @@ function essentials
 {
   echo -n "$crHome  "
   if ! isMounted "$crHome";  then
+    mkdir -p "$crHome"
     if [ "$rootPartition" != "" ]; then
       echo "mount - partition. ($rootPartition)"
       mount "$rootPartition" "$crHome"

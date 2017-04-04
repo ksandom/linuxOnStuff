@@ -40,10 +40,13 @@ fi
 # Prepare.
 mkdir -vp $configDir/{bin,config,config.d,lib,mnt,state}
 
-# Copy stuff
+# Copy stuff.
 for dirName in bin config config.d lib; do
   cp -v $dirName/* "$configDir/$dirName"
 done
+
+# Permissions.
+chmod 755 "$configDir/bin"/*
 
 # Build bin.
 # TODO Do this.

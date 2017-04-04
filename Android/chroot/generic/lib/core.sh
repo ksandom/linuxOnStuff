@@ -17,7 +17,7 @@ function status
 
 
 function showHelp {
-  grep "^  *\".*#" $1 | sed 's/") #/:/g;s/^ *"//g' | column -t -s:
+  grep "^  *\".*#" $1 | sed 's/") #/:/g;s/^ *"//g' | formatOutput
 }
 
 

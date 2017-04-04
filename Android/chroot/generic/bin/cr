@@ -1,9 +1,11 @@
 #!/system/bin/bash
 # load the chroot environment
 
+# Bare minimum of assumptions to get started.
 crManagerHome="/sdcard/.cr"
 
-# bring in the libraries
+# Bring in the libraries.
+. $crManagerHome/lib/display.sh
 . $crManagerHome/lib/mounts.sh
 . $crManagerHome/lib/vnc.sh
 . $crManagerHome/lib/hacks.sh

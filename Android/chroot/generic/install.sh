@@ -60,4 +60,4 @@ fi
 
 # Place executable.
 cd "$configDir"
-cp bin/cr.android cr
+cp bin/cr.android ../cr

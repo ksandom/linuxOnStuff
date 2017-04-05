@@ -57,3 +57,7 @@ if [ "$configDir" != "/sdcard/.cr" ]; then
   done
   cd ~-
 fi
+
+# Place executable.
+cd "$configDir"
+cp bin/cr.android cr

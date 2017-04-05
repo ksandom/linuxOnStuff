@@ -26,6 +26,7 @@ function chooseOption
   case "$1" in
     "start") # Start chroot and all necessary dependancies.
       mountAll
+      installConvenience
       startCR
     ;;
     "stop") # Stop chroot and all necessary dependencies.
@@ -33,9 +34,11 @@ function chooseOption
     ;;
     "startVNC") # Start VNC and all necessary dependancies.
       mountAll
+      installConvenience
       VNCStart
     ;;
     "stopVNC") # Stop VNC.
+      uninstallConvenience
       VNCStop
     ;;
     "status") # Show the status of everything we know about.

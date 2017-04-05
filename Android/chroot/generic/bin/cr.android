@@ -2,6 +2,7 @@
 # load the chroot environment
 
 # Bare minimum of assumptions to get started.
+export crLocation="outside"
 crManagerHome="/sdcard/.cr"
 
 # Bring in the libraries.

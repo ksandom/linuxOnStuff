@@ -1,6 +1,7 @@
 #!/bin/bash
 # load the chroot environment
 
+export crLocation="inside"
 crManagerHome="/sdcard/.cr"
 
 # bring in the libraries

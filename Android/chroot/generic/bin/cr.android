@@ -11,6 +11,7 @@ crManagerHome="/sdcard/.cr"
 . $crManagerHome/lib/vnc.sh
 . $crManagerHome/lib/hacks.sh
 . $crManagerHome/lib/config.sh
+. $crManagerHome/lib/convenience.sh
 . $crManagerHome/lib/core.sh
 
 # Start stuff up.

@@ -62,8 +62,18 @@ function VNCStart
     
     echo "VNC start  starting."
     export PATH=/bin:/sbin:/usr/bin:/usr/sbin:$PATH   
-    hostname `cat $crHome/etc/hostname`  
-    chroot "$crHome" vncserver -geometry "$vncResolution" :1
+    hostname `cat $crHome/etc/hostname`
+    
+    extraOptions=""
+    if [ "$vncDPI" != "" ]; then
+      extraOptions="$extraOptions -dpi $vncDPI"
+    fi
+    
+    if [ "$vncNumber" != "" ]; then
+      extraOptions="$extraOptions :$vncNumber"
+    fi
+    
+    chroot "$crHome" vncserver -geometry "$vncResolution" $extraOptions
   fi
 }
 

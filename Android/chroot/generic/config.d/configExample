@@ -12,5 +12,34 @@ crDescription="An example config."
 rootPartition=""
 rootImage="/sdcard/images/droid4.img"
 
+# Which VNC desktop number do you want? This is useful for two situations:
+# * You want to have multiple desktop environments running on the same machine.
+# * You want to have a consistent port/number to connect to each time.
+# This setting is optional, but I recommed having it set to something so you
+# have something consistent to connect to. If in doubt, leave it set to 1.
+# Unless you are doing something peculiar, there is a 1:1 relationship between
+# this number and the port number. Eg 5900 = 0, 5901 = 1, 5902 = 2 etc.
 vncNumber=1
+
+# The resolution of your desktop area. I use a big one so that I have lots of
+# virtual desktop space. If you don't want the screen to scroll, set this
+# setting to match the resolution of your device.
 vncResolution="3200x1800"
+
+# Specify the DPI of your device. This is optional, and if left commented out
+# will leave the setting up to the defaults of the packages being used.
+# The intention of this setting to to match the font sizing to the device in
+# a sensible way.
+# In reality, this is an excellent way of scaling the fonts in a way that meets
+# your tastes.
+# * A smaller DPI will give you smaller fonts.
+# * A larger DPI will give you larger fonts.
+#
+# Approximate DPI settings. # TODO Check all of these.
+# * 96    - Low DPI laptop.
+# * 120   - Low DPI Phone.
+# * 160   - High DPI Laptop.
+# * 360?  - iPhone with retina display.
+# * 538   - High DPI 5.5" Phone (ZTE Axon 7).
+# * 773   - 4K 5.7" Phone (Samsung Galaxy Note 8).
+# vncDPI=96

@@ -62,7 +62,7 @@ function VNCStart
     
     echo "VNC start  starting."
     export PATH=/bin:/sbin:/usr/bin:/usr/sbin:$PATH   
-    hostname `cat $crHome/etc/hostname`
+    setHostname
     
     extraOptions=""
     if [ "$vncDPI" != "" ]; then

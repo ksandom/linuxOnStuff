@@ -89,7 +89,13 @@ function VNCStop
     echo "stopping."
     export PATH=/bin:/sbin:/usr/bin:/usr/sbin:$PATH    
     export HOME=/
-    chroot "$crHome" vncserver -kill :1
+    
+    extraOptions=""
+    if [ "$vncNumber" != "" ]; then
+      extraOptions="$extraOptions :$vncNumber"
+    fi
+    
+    chroot "$crHome" vncserver -kill $extraOptions
     
     if VNCProcessExists; then
       echo "Whoops, VNC wasn't able to stop. A little self control may be required ;-)"

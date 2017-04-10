@@ -39,7 +39,7 @@ vncResolution="3200x1800"
 # * 96    - Low DPI laptop.
 # * 120   - Low DPI Phone.
 # * 160   - High DPI Laptop.
-# * 360?  - iPhone with retina display.
+# * 380   - iPhone 8 plus.
 # * 538   - High DPI 5.5" Phone (ZTE Axon 7).
 # * 773   - 4K 5.7" Phone (Samsung Galaxy Note 8).
 # vncDPI=96

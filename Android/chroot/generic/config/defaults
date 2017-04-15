@@ -9,3 +9,14 @@ extraMountDirs="sys proc sdcard data"
 # These are the final variables defining what gets un/mounted, and in what order. If you need to nest filesystems, look at the relationship between dev and dev/pts.
 extraMounts="$extraMountDirs dev dev/pts"
 extraUnmounts="$extraMountDirs dev/pts dev"
+
+# Method to use to mount the initial image. Currently can be
+# * oLoop           Normal mount with -o loop.
+# * loSetup         Use losetup to set up a loopback device first. 
+#                     Makes implementation assumptions. Is unlikely to work for your
+#                     use case.
+# * busyboxOLoop    Use the busybox mount with -o loop.
+# * busyboxLoSetup  Use the busybox version of losetup.
+#                     Makes implementation assumptions. Is unlikely to work for your
+#                     use case.
+loopMountMethod='oLoop'

@@ -38,7 +38,7 @@ function essentials
       mount "$rootPartition" "$crHome"
     elif [ "$rootImage" != "" ]; then
       echo "mount - image. ($rootImage)"
-      mount -o loop "$rootImage" "$crHome"
+      mountViaLoop "$rootImage" "$crHome"
     else
       echo "No root image or partition configured?"
       return 0
@@ -46,6 +46,77 @@ function essentials
   else
     echo "skipped."
   fi
+}
+
+function mountViaLoop
+{
+  mountImage="$1"
+  mountLocation="$2"
+  
+  # Method to use to mount the initial image. Currently can be
+  # * oLoop           Normal mount with -o loop.
+  # * loSetup         Use losetup to set up a loopback device first. 
+  #                     Makes implementation assumptions. Is unlikely to work for your
+  #                     use case.
+  # * busyboxOLoop    Use the busybox mount with -o loop.
+  # * busyboxLoSetup  Use the busybox version of losetup.
+  #                     Makes implementation assumptions. Is unlikely to work for your
+  #                     use case.
+  
+  case $loopMountMethod in
+    'oLoop')
+      echo "  -o loop"
+      mount -o loop "$mountImage" "$mountLocation"
+    ;;
+    'loSetup')
+      echo "  losetup"
+      deviceName=`losetup -f `
+      mount "$deviceName" "$mountLocation"
+    ;;
+    'busyboxOLoop')
+      echo "  busybox based mount -o loop"
+      busybox mount -o loop "$mountImage" "$mountLocation"
+    ;;
+    'busyboxLoSetup')
+      echo "  busybox based losetup"
+      deviceName=`busybox losetup -f `
+      mount "$deviceName" "$mountLocation"
+    ;;
+  esac
+}
+
+function unmountLoop
+{
+  mountLocation="$1"
+  
+  # Method to use to mount the initial image. Currently can be
+  # * oLoop           Normal mount with -o loop.
+  # * loSetup         Use losetup to set up a loopback device first. 
+  #                     Makes implementation assumptions. Is unlikely to work for your
+  #                     use case.
+  # * busyboxOLoop    Use the busybox mount with -o loop.
+  # * busyboxLoSetup  Use the busybox version of losetup.
+  #                     Makes implementation assumptions. Is unlikely to work for your
+  #                     use case.
+  
+  case $loopMountMethod in
+    'oLoop')
+      umount "$mountLocation"
+    ;;
+    'loSetup')
+      # deviceName=`losetup -f `
+      # TODO Find the deviceName. This can proabbly be done by grepping mount.
+      umount "$mountLocation"
+    ;;
+    'busyboxOLoop')
+      busybox umount "$mountLocation"
+    ;;
+    'busyboxLoSetup')
+      # TODO Find the deviceName. This can proabbly be done by grepping mount.
+      # deviceName=`busybox losetup -f `
+      umount "$mountLocation"
+    ;;
+  esac
 }
 
 function unessentials

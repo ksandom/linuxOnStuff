@@ -4,10 +4,16 @@
 function startCR
 {
   export PATH=/bin:/sbin:/usr/bin:/usr/sbin:$PATH
-  hostname `cat $crHome/etc/hostname`
+  setHostname
   chroot "$crHome" bash -
 }
 
+function setHostname
+{
+  hostnamePath="$crHome/etc/hostname"
+  echo "$configName" > "$hostnamePath"
+  hostname `cat $hostnamePath`
+}
 
 function status
 {

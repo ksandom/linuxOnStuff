@@ -5,13 +5,9 @@ export crLocation="inside"
 crManagerHome="/sdcard/.cr"
 
 # bring in the libraries
-. $crManagerHome/lib/display.sh
-. $crManagerHome/lib/mounts.sh
-. $crManagerHome/lib/vnc.sh
-. $crManagerHome/lib/hacks.sh
-. $crManagerHome/lib/config.sh
-. $crManagerHome/lib/convenience.sh
-. $crManagerHome/lib/core.sh
+for library in $crManagerHome/lib/*; do
+  . "$library"
+done
 
 # Start stuff up.
 applyAllHacks

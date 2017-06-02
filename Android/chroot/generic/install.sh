@@ -26,7 +26,6 @@
 installLocation=${1:-/sdcard}
 configDir="$installLocation/.cr"
 binPath="$installLocation/cr"
-testBinPath="$installLocation/cr.test" # TODO remove this.
 
 # Get the library to do the grunt work.
 . lib/install.sh

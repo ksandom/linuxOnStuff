@@ -1,14 +1,22 @@
 #!/system/bin/bash
 # Where default settings should be. You probably won't need to change this file, But these settings are abstracted out so you can if you want to.
+# Generally you should override these settings in the specific chroot config in config.d.
+# NOTE that the installation assumes that you will not change this file, and will overwrite it at install time. If you are upgrading and have changed this file, you will need to take care that you are getting the behavior you want.
+
+
+# Name of the primary non-root user.
+nonRootUser="user"
 
 
 # These are the extra file systems that you want to make available inside the chroot environment. The complexity comes in that some of them need to be done in a particular order.
 # This is probably what you'll want to change.
 extraMountDirs="sys proc sdcard data"
 
+
 # These are the final variables defining what gets un/mounted, and in what order. If you need to nest filesystems, look at the relationship between dev and dev/pts.
 extraMounts="$extraMountDirs dev dev/pts"
 extraUnmounts="$extraMountDirs dev/pts dev"
+
 
 # Method to use to mount the initial image. Currently can be
 # * oLoop           Normal mount with -o loop.

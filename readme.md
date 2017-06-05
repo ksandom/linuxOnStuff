@@ -1,4 +1,4 @@
-# CR - Generic.
+# linuxOnStuff
 
 This is a chroot manager that I have made generic to cater to all the things I want to do on various devices. I've been through several iterations to get to this point, and have honed in a design that I'm very happy with.
 

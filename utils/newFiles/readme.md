@@ -1,4 +1,5 @@
-# nf - newFiles 
+# nf - newFiles
+
 is a tool to help you identify new devices as they are plugged in. But it can be used more generally to find new files in a given directory.
 
 # Syntax

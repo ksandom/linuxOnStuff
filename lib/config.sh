@@ -2,7 +2,7 @@
 
 function listConfigs
 {
-  ls "$crManagerHome"/config.d
+  ls "$crManagerHome"/config.d | grep -v '\.md$'
 }
 
 function listConfigsWithDescriptions

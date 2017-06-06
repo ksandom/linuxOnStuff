@@ -5,7 +5,7 @@ export crLocation="inside"
 crManagerHome="/sdcard/.cr"
 
 # bring in the libraries
-for library in $crManagerHome/lib/*; do
+for library in $crManagerHome/lib/*.sh; do
   . "$library"
 done
 

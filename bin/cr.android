@@ -6,11 +6,10 @@ export crLocation="outside"
 crManagerHome="/sdcard/.cr"
 
 # bring in the libraries
-for library in $crManagerHome/lib/*; do
+for library in $crManagerHome/lib/*.sh; do
   . "$library"
 done
 
 # Start stuff up.
 applyAllHacks
 chooseImage "$1" "$2" "$3"
- 

@@ -16,12 +16,14 @@ function sanityChecks
 
 function doInstall
 {
+  echo "Performing install."
+  
   # Prepare.
   mkdir -vp $configDir/{bin,config,config.d,lib,mnt,state,supplimentary}
 
   # Copy stuff.
   for dirName in bin config config.d lib supplimentary; do
-    cp -v $dirName/* "$configDir/$dirName"
+    cp -Rv $dirName/* "$configDir/$dirName"
   done
 
   # Permissions.
